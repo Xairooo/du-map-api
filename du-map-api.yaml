@@ -2,6 +2,9 @@ openapi: 3.0.1
 info:
   title: Du Map
   version: 0.0.1
+servers:
+  - url: https://api.dumap.de
+  - url: http://api.dumap.de:8131
 tags:
   - name: map
   - name: share
@@ -36,7 +39,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Face'
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Face'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         404:
@@ -46,7 +51,10 @@ paths:
       tags:
         - scan
       requestBody:
-        $ref: '#/components/schemas/Scan'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Scan'
       operationId: saveScan
       responses:
         200:
