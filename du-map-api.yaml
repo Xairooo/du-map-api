@@ -1,0 +1,213 @@
+openapi: 3.0.1
+info:
+  title: Du Map
+  version: 0.0.1
+tags:
+  - name: map
+  - name: share
+paths:
+  /faces:
+    get:
+      tags:
+        - map
+      parameters:
+        - name: tileId
+          in: query
+          schema:
+            type: integer
+            format: int64
+          required: false
+        - name: celestialId
+          in: query
+          schema:
+            type: integer
+            format: int64
+          required: false
+        - name: scale
+          in: query
+          schema:
+            type: integer
+            format: int64
+          required: false
+      operationId: getFace
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Face'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        404:
+          description: Tile does not exist on planet
+  /scan:
+    post:
+      tags:
+        - scan
+      requestBody:
+        $ref: '#/components/schemas/Scan'
+      operationId: saveScan
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /shares:
+    get:
+      tags:
+        - shares
+      operationId: getShares
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Share'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+  /shares/{category]/{shareId}:
+    put:
+      operationId: changeShare
+      parameters:
+        - name: category
+          required: true
+          in: path
+          schema:
+            enum:
+              - pending
+              - active
+        - name: shareId
+          required: true
+          in: path
+          schema:
+            type: number
+            format: int64
+        - name: action
+          in: query
+          schema:
+            enum:
+              - cancel
+              - accept
+      responses:
+        200:
+          description: OK
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+components:
+  schemas:
+    Face:
+      type: object
+      required:
+        - tileId
+        - own
+      properties:
+        tileId:
+          type: number
+          format: int64
+        owner:
+          type: string
+        own:
+          type: boolean
+        center:
+          type: array
+          items:
+            type: number
+            format: double
+        vertices:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+              format: double
+        duEntityId:
+          type: number
+          format: int64
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+        scan:
+          $ref: '#/components/schemas/Scan'
+        color:
+          $ref: '#/components/schemas/RGBColor'
+    Scan:
+      type: object
+      required:
+        - time
+        - ores
+        - tileId
+        - planet
+        - owner
+      properties:
+        time:
+          type: string
+          format: date-time
+        ores:
+          type: object
+        tileId:
+          type: number
+          format: int64
+        planet:
+          type: string
+        owner:
+          type: string
+    RGBColor:
+      type: object
+      required:
+        - r
+        - g
+        - b
+      properties:
+        r:
+          type: number
+          format: int64 
+        g:
+          type: number
+          format: int64
+        b:
+          type: number
+          format: int64
+    Share:
+      type: object
+      required:
+        - id
+        - user
+        - withContent
+        - ownShare
+        - pending
+      properties:
+        id:
+          type: number
+          format: int64
+        celestial:
+          type: string
+        tileId:
+          type: number
+          format: int64
+        user:
+          type: string
+        targetUser:
+          type: string
+        targetGroup:
+          type: string
+        withContent:
+          type: boolean
+        ownShare:
+          type: boolean
+        pending:
+          type: boolean
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
