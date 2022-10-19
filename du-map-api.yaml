@@ -69,7 +69,7 @@ paths:
                   $ref: '#/components/schemas/Share'
         401:
           $ref: '#/components/responses/UnauthorizedError'
-  /shares/{category]/{shareId}:
+  /shares/{category}/{shareId}:
     put:
       operationId: changeShare
       parameters:
