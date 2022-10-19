@@ -18,6 +18,8 @@ jobs:
 
       - run: npm install @openapitools/openapi-generator-cli@2.5.1 -g
 
+      - run: npx @openapitools/openapi-generator-cli version-manager set 6.1.0
+
       - run: npx @openapitools/openapi-generator-cli@2.5.1 generate -i du-map-api.yaml -g java -o java-apachehttp --additional-properties=interfaceOnly=true,groupId=de.tiramon.du,artifactId=du-map-api-apachehttp-client,basePackage=de.tiramon.du.map,apiPackage=de.tiramon.du.map.api,modelPackage=de.tiramon.du.map.model,invokerPackage=de.tiramon.du.map.client,developerName=Tiramon,developerEmail=tiramon@tiramon.de,scmConnection=scm:git:git@github.com:tiramon/du-map-api.git,library=apache-httpclient
 
       - name: Find and Replace

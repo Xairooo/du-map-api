@@ -18,7 +18,10 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
           scope: '@tiramon'
       - run: npm install @openapitools/openapi-generator-cli@2.5.1 -g
-      - run: npx @openapitools/openapi-generator-cli generate@2.5.1 -i du-map-api.yaml -g typescript-angular -o typescript-angular --additional-properties=npmName=@tiramon/du-map-api,stringEnums=true,supportsES6=true,ngVersion=13.2.0
+
+      - run: npx @openapitools/openapi-generator-cli version-manager set 6.1.0
+
+      - run: npx @openapitools/openapi-generator-cli@2.5.1 generate -i du-map-api.yaml -g typescript-angular -o typescript-angular --additional-properties=npmName=@tiramon/du-map-api,stringEnums=true,supportsES6=true,ngVersion=13.2.0
       - run: npm uninstall tsickle
         working-directory: typescript-angular
       - run: npm install
