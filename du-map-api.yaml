@@ -9,6 +9,36 @@ tags:
   - name: map
   - name: share
 paths:
+  /face/{planet}/{tileId}:
+    put:
+      tags:
+        - map
+      parameters:
+        - name: planet
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: tileId
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+      operationId: updateTile
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Face"
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        404:
+          description: Tile does not exist on planet
   /faces:
     get:
       tags:
@@ -42,10 +72,10 @@ paths:
             application/json:
               schema:
                 type: array
-                items: 
-                  $ref: '#/components/schemas/Face'
+                items:
+                  $ref: "#/components/schemas/Face"
         401:
-          $ref: '#/components/responses/UnauthorizedError'
+          $ref: "#/components/responses/UnauthorizedError"
         404:
           description: Tile does not exist on planet
   /scan:
@@ -56,7 +86,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Scan'
+              $ref: "#/components/schemas/Scan"
       operationId: saveScan
       security:
         - bearerAuth: []
@@ -64,7 +94,7 @@ paths:
         200:
           description: OK
         401:
-          $ref: '#/components/responses/UnauthorizedError'
+          $ref: "#/components/responses/UnauthorizedError"
   /shares:
     get:
       tags:
@@ -80,9 +110,9 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Share'
+                  $ref: "#/components/schemas/Share"
         401:
-          $ref: '#/components/responses/UnauthorizedError'
+          $ref: "#/components/responses/UnauthorizedError"
   /shares/{category}/{shareId}:
     put:
       tags:
@@ -114,7 +144,7 @@ paths:
         200:
           description: OK
         401:
-          $ref: '#/components/responses/UnauthorizedError'
+          $ref: "#/components/responses/UnauthorizedError"
 components:
   schemas:
     Face:
@@ -152,9 +182,9 @@ components:
           type: number
           format: double
         scan:
-          $ref: '#/components/schemas/Scan'
+          $ref: "#/components/schemas/Scan"
         color:
-          $ref: '#/components/schemas/RGBColor'
+          $ref: "#/components/schemas/RGBColor"
     Scan:
       type: object
       required:
@@ -185,7 +215,7 @@ components:
       properties:
         r:
           type: number
-          format: int64 
+          format: int64
         g:
           type: number
           format: int64
@@ -222,10 +252,10 @@ components:
         pending:
           type: boolean
   securitySchemes:
-    bearerAuth:            # arbitrary name for the security scheme
+    bearerAuth: # arbitrary name for the security scheme
       type: http
       scheme: bearer
-      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+      bearerFormat: JWT # optional, arbitrary value for documentation purposes
   responses:
     UnauthorizedError:
       description: Access token is missing or invalid
