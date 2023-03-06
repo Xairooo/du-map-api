@@ -14,7 +14,7 @@ jobs:
       packages: write
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - run: npm install @openapitools/openapi-generator-cli -g
       - run: npx @openapitools/openapi-generator-cli generate -i du-map-api.yaml -g spring -o spring --additional-properties=interfaceOnly=true,groupId=de.tiramon.du,artifactId=du-map-api,basePackage=de.tiramon.du.map,apiPackage=de.tiramon.du.map.api,modelPackage=de.tiramon.du.map.model,developerName=Tiramon,developerEmail=tiramon@tiramon.de,scmConnection=scm:git:git@github.com:tiramon/du-map-api.git
