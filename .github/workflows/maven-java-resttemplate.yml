@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: npm install @openapitools/openapi-generator-cli -g
-      - run: npx @openapitools/openapi-generator-cli generate -i du-map-api.yaml -g java -o java-resttemplate --additional-properties=interfaceOnly=true,groupId=de.tiramon.du,artifactId=du-map-api-resttemplate-client,basePackage=de.tiramon.du.map,apiPackage=de.tiramon.du.map.api,modelPackage=de.tiramon.du.map.model,invokerPackage=de.tiramon.du.map.client,developerName=Tiramon,developerEmail=tiramon@tiramon.de,scmConnection=scm:git:git@github.com:tiramon/du-map-api.git,library=resttemplate
+      - run: npx @openapitools/openapi-generator-cli generate -i du-map-api.yaml -g java -o java-resttemplate --additional-properties=interfaceOnly=true,groupId=de.xairooo.du,artifactId=du-map-api-resttemplate-client,basePackage=de.xairooo.du.map,apiPackage=de.xairooo.du.map.api,modelPackage=de.xairooo.du.map.model,invokerPackage=de.xairooo.du.map.client,developerName=xairooo,developerEmail=xairooo@xairooo.de,scmConnection=scm:git:git@github.com:xairooo/du-map-api.git,library=resttemplate
 
       - name: Find and Replace
         uses: jacobtomlinson/gha-find-replace@v2

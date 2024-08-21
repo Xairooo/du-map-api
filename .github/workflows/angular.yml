@@ -16,10 +16,10 @@ jobs:
           node-version: "16.x"
           registry-url: "https://npm.pkg.github.com"
           # Defaults to the user or organization that owns the workflow file
-          scope: "@tiramon"
+          scope: "@xairooo"
       - run: npm install @openapitools/openapi-generator-cli -g
 
-      - run: npx @openapitools/openapi-generator-cli generate -i du-map-api.yaml -g typescript-angular -o typescript-angular --additional-properties=npmName=@tiramon/du-map-api,stringEnums=true,supportsES6=true,ngVersion=13.2.0
+      - run: npx @openapitools/openapi-generator-cli generate -i du-map-api.yaml -g typescript-angular -o typescript-angular --additional-properties=npmName=@xairooo/du-map-api,stringEnums=true,supportsES6=true,ngVersion=13.2.0
       - run: npm uninstall tsickle
         working-directory: typescript-angular
       - run: npm install
